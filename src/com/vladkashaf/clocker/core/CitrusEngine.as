@@ -92,7 +92,7 @@ package com.vladkashaf.clocker.core {
 		{
 			return _debug;
 		}
-		public function set DEBUG(value:Boolean):Boolean
+		public function set DEBUG(value:Boolean):*
 		{
 			return _debug = value;
 		}
@@ -103,7 +103,7 @@ package com.vladkashaf.clocker.core {
 		{
 			return _onPlayingChange;
 		}
-		public function set onPlayingChange(value:Signal):Signal
+		public function set onPlayingChange(value:Signal):*
 		{
 			return _onPlayingChange = value;
 		}
@@ -115,7 +115,7 @@ package com.vladkashaf.clocker.core {
 		{
 			return _onStageResize;
 		}
-		public function set onStageResize(value:Signal):Signal
+		public function set onStageResize(value:Signal):*
 		{
 			return _onStageResize = value;
 		}
@@ -127,7 +127,7 @@ package com.vladkashaf.clocker.core {
 		{
 			return _gameData;
 		}
-		public function set gameData(value:AGameData):AGameData
+		public function set gameData(value:AGameData):*
 		{
 			return _gameData = value;
 		}
@@ -138,7 +138,7 @@ package com.vladkashaf.clocker.core {
 		{
 			return _levelManager;
 		}
-		public function set levelManager(value:LevelManager):void
+		public function set levelManager(value:LevelManager):*
 		{
 			return _levelManager = value;
 		}
@@ -242,7 +242,7 @@ package com.vladkashaf.clocker.core {
 		{
 			return _stateInner;
 		}
-		protected function set _state(value:IState):IState
+		protected function set _state(value:IState):*
 		{
 			return _stateInner = value;
 		}
@@ -250,7 +250,7 @@ package com.vladkashaf.clocker.core {
 		{
 			return _newStateInner;
 		}
-		protected function set _newState(value:IState):IState
+		protected function set _newState(value:IState):*
 		{
 			return _newStateInner = value;
 		}
@@ -259,7 +259,7 @@ package com.vladkashaf.clocker.core {
 		{
 			return _stateTransitionningInner;
 		}
-		protected function set _stateTransitionning(value:IState):void
+		protected function set _stateTransitionning(value:IState):*
 		{
 			return _stateTransitionningInner = value;
 		}
@@ -268,7 +268,7 @@ package com.vladkashaf.clocker.core {
 		{
 			return _futureStateInner;
 		}
-		protected function set _futureState(value:IState):IState
+		protected function set _futureState(value:IState):*
 		{
 			return _futureStateInner = value;
 		}
@@ -276,7 +276,7 @@ package com.vladkashaf.clocker.core {
 		{
 			return _stateDisplayIndexInner;
 		}
-		protected function set _stateDisplayIndex(value:uint):uint
+		protected function set _stateDisplayIndex(value:uint):*
 		{
 			return _stateDisplayIndexInner = value;
 		}
@@ -284,7 +284,7 @@ package com.vladkashaf.clocker.core {
 		{
 			return _playingInner;
 		}
-		protected function set _playing(value:Boolean):Boolean
+		protected function set _playing(value:Boolean):*
 		{
 			return _playingInner = value;
 		}
@@ -292,7 +292,7 @@ package com.vladkashaf.clocker.core {
 		{
 			return _inputInner;
 		}
-		protected function set _input(value:Input):Input
+		protected function set _input(value:Input):*
 		{
 			return _inputInner = value;
 		}
@@ -300,7 +300,7 @@ package com.vladkashaf.clocker.core {
 		{
 			return _fullScreenInner;
 		}
-		protected function set _fullScreen(value:Boolean):Boolean
+		protected function set _fullScreen(value:Boolean):*
 		{
 			return _fullScreenInner = value;
 		}
@@ -308,7 +308,7 @@ package com.vladkashaf.clocker.core {
 		{
 			return _screenWidthInner;
 		}
-		protected function set _screenWidth(value:int):int
+		protected function set _screenWidth(value:int):*
 		{
 			return _screenWidthInner = value;
 		}
@@ -316,7 +316,7 @@ package com.vladkashaf.clocker.core {
 		{
 			return _screenHeightInner;
 		}
-		protected function set _screenHeight(value:int):int
+		protected function set _screenHeight(value:int):*
 		{
 			return _screenHeightInner = value;
 		}
@@ -325,7 +325,7 @@ package com.vladkashaf.clocker.core {
 		{
 			return _timeDeltaInner;
 		}
-		protected function set _timeDelta(value:Number):void
+		protected function set _timeDelta(value:Number):*
 		{
 			return _timeDeltaInner = value;
 		}

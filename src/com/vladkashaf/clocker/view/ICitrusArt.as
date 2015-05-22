@@ -1,4 +1,4 @@
-package citrus.view 
+package com.vladkashaf.clocker.view 
 {
 	
 	public interface ICitrusArt 

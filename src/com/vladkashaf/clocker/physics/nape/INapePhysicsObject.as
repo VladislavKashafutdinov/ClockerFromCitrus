@@ -1,4 +1,4 @@
-package citrus.physics.nape {
+package com.vladkashaf.clocker.physics.nape {
 
 	import nape.callbacks.InteractionCallback;
 	import nape.callbacks.PreCallback;

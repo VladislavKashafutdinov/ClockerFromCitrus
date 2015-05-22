@@ -1,8 +1,8 @@
 package com.vladkashaf.clocker.physics.nape {
 
-	import citrus.core.CitrusEngine;
-	import citrus.datastructures.BitFlag;
-	import citrus.physics.IDebugView;
+	import com.vladkashaf.clocker.core.CitrusEngine;
+	import com.vladkashaf.clocker.datastructures.BitFlag;
+	import com.vladkashaf.clocker.physics.IDebugView;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.geom.Matrix;

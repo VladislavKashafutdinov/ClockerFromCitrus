@@ -1,11 +1,11 @@
 package com.vladkashaf.clocker.view.starlingview {
 
-	import citrus.utils.Mobile;
+	import com.vladkashaf.clocker.core.CitrusEngine;
+	import com.vladkashaf.clocker.math.MathUtils;
+	import com.vladkashaf.clocker.utils.AssetCache;
+	import com.vladkashaf.clocker.utils.Mobile;
+	import com.vladkashaf.clocker.view.ISpriteView;
 	import flash.display3D.Context3DTextureFormat;
-	import citrus.utils.AssetCache;
-	import citrus.core.CitrusEngine;
-	import citrus.math.MathUtils;
-	import citrus.view.ISpriteView;
 
 	import starling.display.Image;
 	import starling.display.Sprite;

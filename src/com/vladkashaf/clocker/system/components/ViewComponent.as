@@ -1,9 +1,8 @@
-package citrus.system.components {
+package com.vladkashaf.clocker.system.components {
 
-	import citrus.system.Component;
-	import citrus.view.ICitrusArt;
-	import citrus.view.ISpriteView;
-
+	import com.vladkashaf.clocker.system.Component;
+	import com.vladkashaf.clocker.view.ICitrusArt;
+	import com.vladkashaf.clocker.view.ISpriteView;
 	import org.osflash.signals.Signal;
 
 	import flash.display.MovieClip;

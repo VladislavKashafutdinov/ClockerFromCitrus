@@ -1,16 +1,15 @@
 package com.vladkashaf.clocker.core.starling {
 
-	import citrus.core.CitrusEngine;
-	import citrus.core.CitrusObject;
-	import citrus.core.IState;
-	import citrus.core.MediatorState;
-	import citrus.datastructures.PoolObject;
-	import citrus.input.Input;
-	import citrus.system.Entity;
-	import citrus.system.components.ViewComponent;
-	import citrus.view.ACitrusView;
-	import citrus.view.starlingview.StarlingCamera;
-	import citrus.view.starlingview.StarlingView;
+	import com.vladkashaf.clocker.core.CitrusEngine;
+	import com.vladkashaf.clocker.core.CitrusObject;
+	import com.vladkashaf.clocker.core.IState;
+	import com.vladkashaf.clocker.core.MediatorState;
+	import com.vladkashaf.clocker.datastructures.PoolObject;
+	import com.vladkashaf.clocker.input.Input;
+	import com.vladkashaf.clocker.system.Entity;
+	import com.vladkashaf.clocker.view.ACitrusView;
+	import com.vladkashaf.clocker.view.starlingview.StarlingCamera;
+	import com.vladkashaf.clocker.view.starlingview.StarlingView;
 
 	import starling.display.Sprite;
 

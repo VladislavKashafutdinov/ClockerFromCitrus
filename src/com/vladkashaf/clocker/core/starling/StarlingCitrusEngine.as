@@ -2,6 +2,7 @@ package com.vladkashaf.clocker.core.starling
 {
 
 	import com.vladkashaf.clocker.core.CitrusEngine;
+	import com.vladkashaf.clocker.core.State;
 	import flash.display.Stage;
 	import starling.core.Starling;
 	import starling.display.DisplayObject;
@@ -218,7 +219,7 @@ package com.vladkashaf.clocker.core.starling
 		 */
 		override protected function handleStageActivated(e:flash.events.Event):void 
 		{
-			_starlingProxy.start();
+			_starlingProxy.start(_starlingRootCreated);
 			super.handleStageActivated(e);
 		}
 		

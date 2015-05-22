@@ -1,6 +1,6 @@
 package com.vladkashaf.clocker.objects.platformer.nape {
 
-	import citrus.objects.NapePhysicsObject;
+	import com.vladkashaf.clocker.objects.NapePhysicsObject;
 	import nape.callbacks.CbType;
 	import nape.callbacks.InteractionType;
 	import nape.callbacks.PreCallback;

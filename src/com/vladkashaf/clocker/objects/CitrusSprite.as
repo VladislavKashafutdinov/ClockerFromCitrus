@@ -1,11 +1,10 @@
 package com.vladkashaf.clocker.objects {
 
-	import citrus.core.CitrusObject;
-	import citrus.math.MathVector;
-	import citrus.view.ICitrusArt;
-	import citrus.view.ISpriteView;
-	import citrus.view.spriteview.SpriteDebugArt;
-
+	import com.vladkashaf.clocker.core.CitrusObject;
+	import com.vladkashaf.clocker.math.MathVector;
+	import com.vladkashaf.clocker.view.ICitrusArt;
+	import com.vladkashaf.clocker.view.ISpriteView;
+	import com.vladkashaf.clocker.view.spriteview.SpriteDebugArt;
 	import org.osflash.signals.Signal;
 
 	import flash.utils.Dictionary;

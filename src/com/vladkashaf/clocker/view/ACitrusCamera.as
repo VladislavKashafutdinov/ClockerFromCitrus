@@ -1,9 +1,9 @@
 package com.vladkashaf.clocker.view {
 
 	import aze.motion.EazeTween;
-	import citrus.core.CitrusEngine;
-	import citrus.math.MathUtils;
-	import citrus.math.MathVector;
+	import com.vladkashaf.clocker.core.CitrusEngine;
+	import com.vladkashaf.clocker.math.MathUtils;
+	import com.vladkashaf.clocker.math.MathVector;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;

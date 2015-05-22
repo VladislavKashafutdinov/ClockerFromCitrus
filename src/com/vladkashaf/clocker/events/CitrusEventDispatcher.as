@@ -1,7 +1,7 @@
 package com.vladkashaf.clocker.events 
 {
+	import com.vladkashaf.clocker.core.citrus_internal;
 	import flash.utils.Dictionary;
-	import citrus.core.citrus_internal;
 
 	/**
 	 * experimental event dispatcher (wip)

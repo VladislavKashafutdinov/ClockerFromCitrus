@@ -1,7 +1,6 @@
-package citrus.utils {
+package com.vladkashaf.clocker.utils {
 
-	import citrus.core.CitrusEngine;
-
+	import com.vladkashaf.clocker.core.CitrusEngine;
 	import flash.display.Stage;
 	import flash.system.Capabilities;
 

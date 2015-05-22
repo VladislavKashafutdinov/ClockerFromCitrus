@@ -1,18 +1,17 @@
-package citrus.sounds 
+package com.vladkashaf.clocker.sounds 
 {
 
-	import citrus.core.CitrusEngine;
-	import citrus.events.CitrusEvent;
-	import citrus.events.CitrusEventDispatcher;
-	import citrus.events.CitrusSoundEvent;
+	import com.vladkashaf.clocker.core.citrus_internal;
+	import com.vladkashaf.clocker.core.CitrusEngine;
+	import com.vladkashaf.clocker.events.CitrusEvent;
+	import com.vladkashaf.clocker.events.CitrusEventDispatcher;
+	import com.vladkashaf.clocker.events.CitrusSoundEvent;
 	import flash.events.ErrorEvent;
 	import flash.events.IOErrorEvent;
 	import flash.events.ProgressEvent;
 	import flash.media.Sound;
 	import flash.media.SoundTransform;
 	import flash.net.URLRequest;
-	
-	import citrus.core.citrus_internal;
 
 	public class CitrusSound extends CitrusEventDispatcher
 	{

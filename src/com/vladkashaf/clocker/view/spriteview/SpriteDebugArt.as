@@ -1,8 +1,8 @@
-package citrus.view.spriteview 
+package com.vladkashaf.clocker.view.spriteview 
 {
 
-	import citrus.core.CitrusObject;
-	import citrus.objects.CitrusSprite;
+	import com.vladkashaf.clocker.core.CitrusObject;
+	import com.vladkashaf.clocker.objects.CitrusSprite;
 
 	import flash.display.MovieClip;
 	

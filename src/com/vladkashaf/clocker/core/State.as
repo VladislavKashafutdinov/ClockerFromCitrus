@@ -1,12 +1,10 @@
 package com.vladkashaf.clocker.core {
 
-	import citrus.datastructures.PoolObject;
-	import citrus.input.Input;
-	import citrus.system.Entity;
-	import citrus.system.components.ViewComponent;
-	import citrus.view.ACitrusView;
-	import citrus.view.spriteview.SpriteView;
-
+	import com.vladkashaf.clocker.datastructures.PoolObject;
+	import com.vladkashaf.clocker.input.Input;
+	import com.vladkashaf.clocker.system.Entity;
+	import com.vladkashaf.clocker.view.ACitrusView;
+	import com.vladkashaf.clocker.view.spriteview.SpriteView;
 	import flash.display.Sprite;
 
 	/**

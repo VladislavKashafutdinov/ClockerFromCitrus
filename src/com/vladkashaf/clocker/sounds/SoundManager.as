@@ -1,12 +1,10 @@
 package com.vladkashaf.clocker.sounds {
 
 	import aze.motion.eaze;
+	import com.vladkashaf.clocker.core.citrus_internal;
+	import com.vladkashaf.clocker.events.CitrusEventDispatcher;
+	import com.vladkashaf.clocker.events.CitrusSoundEvent;
 	
-	import citrus.core.citrus_internal;
-
-	import citrus.events.CitrusEventDispatcher;
-	import citrus.events.CitrusSoundEvent;
-
 	import flash.media.SoundMixer;
 	import flash.media.SoundTransform;
 	import flash.utils.Dictionary;

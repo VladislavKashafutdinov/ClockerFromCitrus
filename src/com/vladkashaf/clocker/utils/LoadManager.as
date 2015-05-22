@@ -1,7 +1,7 @@
-package citrus.utils {
+package com.vladkashaf.clocker.utils {
 
-	import citrus.core.CitrusObject;
-	import citrus.view.ICitrusArt;
+	import com.vladkashaf.clocker.core.CitrusObject;
+	import com.vladkashaf.clocker.view.ICitrusArt;
 	import org.osflash.signals.Signal;
 
 	import flash.display.Loader;

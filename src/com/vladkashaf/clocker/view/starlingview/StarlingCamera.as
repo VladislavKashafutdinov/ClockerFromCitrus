@@ -1,9 +1,8 @@
-package citrus.view.starlingview {
+package com.vladkashaf.clocker.view.starlingview {
 
-	import citrus.core.starling.StarlingCitrusEngine;
-	import citrus.math.MathUtils;
-	import citrus.view.ACitrusCamera;
-
+	import com.vladkashaf.clocker.core.starling.StarlingCitrusEngine;
+	import com.vladkashaf.clocker.math.MathUtils;
+	import com.vladkashaf.clocker.view.ACitrusCamera;
 	import starling.display.Sprite;
 
 	import flash.display.Sprite;

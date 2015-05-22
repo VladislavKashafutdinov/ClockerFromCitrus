@@ -8,6 +8,7 @@ package com.vladkashaf.clocker.core.starling
 	import starling.display.DisplayObject;
 	import starling.events.Event;
 	import starling.utils.RectangleUtil;
+	import starling.utils.ScaleMode;
 	/**
 	 * ...
 	 * @author Kashafuutdinov Vladislav
@@ -48,7 +49,7 @@ package com.vladkashaf.clocker.core.starling
 		
 		public function initialize(debug:Boolean, antiAliasing:uint, stage3D:Stage3D, viewport:Rectangle, onContext3DCreated:Function, onStageResize:Function):void
 		{
-			_viewport = viewPort ? viewPort : _viewport;
+			_viewport = viewport ? viewport : _viewport;
 			
 			Starling.handleLostContext = HANDLE_LOST_CONTEXT;
 				
@@ -85,7 +86,7 @@ package com.vladkashaf.clocker.core.starling
 				_starling.addEventListener(EVENT_ROOT_CREATED, handleRootCreated);
 			}
 		}
-		public function stop()
+		public function stop():void
 		{
 			if (_starling)
 				_starling.stop();
@@ -125,20 +126,20 @@ package com.vladkashaf.clocker.core.starling
 			{
 				case ViewportMode.LETTERBOX:
 					_viewport = RectangleUtil.fit(baseRect, screenRect, ScaleMode.SHOW_ALL);
-					setViewportPosition(screenWidth * .5 - _viewport.width * .5, screenHeight * .5 - _viewport.height * .5, _viewport);
-					setStageSize(_baseWidth, _baseHeight, _viewport);
+					setViewportPosition(screenWidth * .5 - _viewport.width * .5, screenHeight * .5 - _viewport.height * .5);
+					setStageSize(_baseWidth, _baseHeight);
 					break;
 				case ViewportMode.FULLSCREEN:
 					_viewport = RectangleUtil.fit(baseRect, screenRect, ScaleMode.SHOW_ALL);
 					var viewportBaseRatioWidth:Number = _viewport.width / baseRect.width;
 					var viewportBaseRatioHeight:Number = _viewport.height / baseRect.height;
 					_viewport.copyFrom(screenRect);
-					setViewportPosition(0, 0, _viewport);
+					setViewportPosition(0, 0);
 					setStageSize(screenRect.width / viewportBaseRatioWidth, screenRect.height / viewportBaseRatioHeight);
 					break;
 				case ViewportMode.NO_SCALE:
 					_viewport = baseRect;
-					setViewportPosition(screenWidth * .5 - _viewport.width * .5, screenHeight * .5 - _viewport.height * .5, _viewport);
+					setViewportPosition(screenWidth * .5 - _viewport.width * .5, screenHeight * .5 - _viewport.height * .5);
 					setStageSize(_baseWidth, _baseHeight);
 					break;
 				case ViewportMode.LEGACY:
@@ -173,7 +174,7 @@ package com.vladkashaf.clocker.core.starling
 		{
 			return _baseHeight;
 		}
-		public function set baseHeight(value:Number):Number
+		public function set baseHeight(value:Number):*
 		{
 			return _baseHeight = value;
 		}
@@ -181,12 +182,12 @@ package com.vladkashaf.clocker.core.starling
 		{
 			return _baseWidth;
 		}
-		public function set baseWidth(value:Number):Number
+		public function set baseWidth(value:Number):*
 		{
 			return _baseWidth = value;
 		}
 		
-		private function setViewportPosition(x:Number, y:Number, _viewport:Rectangle):void
+		private function setViewportPosition(x:Number, y:Number):void
 		{
 			_viewport.x = x;
 			_viewport.y = y;

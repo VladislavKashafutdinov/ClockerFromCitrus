@@ -1,6 +1,5 @@
-package citrus.system {
-
-	import citrus.core.CitrusObject;
+package com.vladkashaf.clocker.system {
+	import com.vladkashaf.clocker.core.CitrusObject;
 
 	/**
 	 * A component is an object dedicate to a (single) task for an entity : physics, collision, inputs, view, movement... management.

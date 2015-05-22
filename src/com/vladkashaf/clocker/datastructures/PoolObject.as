@@ -1,10 +1,9 @@
 package com.vladkashaf.clocker.datastructures {
 
-	import citrus.core.citrus_internal;
-	import citrus.core.CitrusObject;
-	import citrus.core.IState;
-	import citrus.view.ACitrusView;
-
+	import com.vladkashaf.clocker.core.citrus_internal;
+	import com.vladkashaf.clocker.core.CitrusObject;
+	import com.vladkashaf.clocker.core.IState;
+	import com.vladkashaf.clocker.view.ACitrusView;
 	import org.osflash.signals.Signal;
 
 	/**

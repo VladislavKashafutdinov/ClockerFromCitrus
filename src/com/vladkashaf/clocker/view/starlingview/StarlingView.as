@@ -1,9 +1,9 @@
-package citrus.view.starlingview {
+package com.vladkashaf.clocker.view.starlingview {
 
-	import citrus.physics.APhysicsEngine;
-	import citrus.view.ACitrusView;
-	import citrus.view.ISpriteView;
-	import citrus.view.spriteview.SpriteDebugArt;
+	import com.vladkashaf.clocker.physics.APhysicsEngine;
+	import com.vladkashaf.clocker.view.ACitrusView;
+	import com.vladkashaf.clocker.view.ISpriteView;
+	import com.vladkashaf.clocker.view.spriteview.SpriteDebugArt;
 
 	import dragonBones.animation.WorldClock;
 

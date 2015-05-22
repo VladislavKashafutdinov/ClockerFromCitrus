@@ -1,6 +1,6 @@
-package citrus.view.spriteview 
+package com.vladkashaf.clocker.view.spriteview 
 {
-	import citrus.core.CitrusEngine;
+	import com.vladkashaf.clocker.core.CitrusEngine;
 	import flash.display.FrameLabel;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;

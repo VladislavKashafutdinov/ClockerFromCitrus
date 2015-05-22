@@ -1,9 +1,8 @@
-package citrus.physics.nape {
+package com.vladkashaf.clocker.physics.nape {
 
-	import citrus.physics.APhysicsEngine;
-	import citrus.physics.PhysicsCollisionCategories;
-	import citrus.view.ISpriteView;
-
+	import com.vladkashaf.clocker.physics.APhysicsEngine;
+	import com.vladkashaf.clocker.physics.PhysicsCollisionCategories;
+	import com.vladkashaf.clocker.view.ISpriteView;
 	import nape.geom.Vec2;
 	import nape.space.Space;
 

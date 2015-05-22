@@ -1,8 +1,8 @@
-package citrus.view.starlingview {
+package com.vladkashaf.clocker.view.starlingview {
 
-	import citrus.core.CitrusEngine;
-	import citrus.physics.APhysicsEngine;
-	import citrus.physics.IDebugView;
+	import com.vladkashaf.clocker.core.CitrusEngine;
+	import com.vladkashaf.clocker.physics.APhysicsEngine;
+	import com.vladkashaf.clocker.physics.IDebugView;
 	import flash.display.Sprite;
 	import starling.core.Starling;
 	import starling.display.Sprite;

@@ -1,12 +1,11 @@
 package com.vladkashaf.clocker.core {
-
-	import citrus.physics.APhysicsEngine;
-	import citrus.datastructures.PoolObject;
-	import citrus.objects.APhysicsObject;
-	import citrus.system.Component;
-	import citrus.system.Entity;
-	import citrus.system.components.ViewComponent;
-	import citrus.view.ACitrusView;
+	import com.vladkashaf.clocker.datastructures.PoolObject;
+	import com.vladkashaf.clocker.objects.APhysicsObject;
+	import com.vladkashaf.clocker.physics.APhysicsEngine;
+	import com.vladkashaf.clocker.system.Component;
+	import com.vladkashaf.clocker.system.components.ViewComponent;
+	import com.vladkashaf.clocker.system.Entity;
+	import com.vladkashaf.clocker.view.ACitrusView;
 
 	/**
 	 * The MediatorState class is very important. It usually contains the logic for a particular state the game is in.

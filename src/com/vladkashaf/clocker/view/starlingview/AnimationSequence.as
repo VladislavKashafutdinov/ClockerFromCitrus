@@ -1,7 +1,7 @@
-package citrus.view.starlingview {
+package com.vladkashaf.clocker.view.starlingview {
 
-	import citrus.core.CitrusEngine;
-	import citrus.core.starling.StarlingCitrusEngine;
+	import com.vladkashaf.clocker.core.CitrusEngine;
+	import com.vladkashaf.clocker.core.starling.StarlingCitrusEngine;
 
 	import starling.display.MovieClip;
 	import starling.display.Sprite;

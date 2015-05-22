@@ -1,15 +1,15 @@
-package citrus.sounds
+package com.vladkashaf.clocker.sounds
 {
-	import citrus.core.CitrusEngine;
-	import citrus.events.CitrusEvent;
-	import citrus.events.CitrusEventDispatcher;
-	import citrus.events.CitrusSoundEvent;
-	import citrus.utils.SoundChannelUtil;
+	import com.vladkashaf.clocker.core.citrus_internal;
+	import com.vladkashaf.clocker.core.CitrusEngine;
+	import com.vladkashaf.clocker.events.CitrusEvent;
+	import com.vladkashaf.clocker.events.CitrusEventDispatcher;
+	import com.vladkashaf.clocker.events.CitrusSoundEvent;
+	import com.vladkashaf.clocker.utils.SoundChannelUtil;
 	import flash.events.Event;
 	import flash.media.Sound;
 	import flash.media.SoundChannel;
 	import flash.media.SoundTransform;
-	import citrus.core.citrus_internal;
 	
 	/**
 	 * CitrusSoundInstance
@@ -17,14 +17,14 @@ package citrus.sounds
 	 * it holds a reference to the CitrusSound it was created from and
 	 * a sound channel. through a CitrusSoundInstance you can tweak volumes and panning
 	 * individually instead of CitrusSound wide.
-	 * 
+	 *
 	 * a paused sound is still considered active, and keeps a soundChannel alive to be able to resume later.
 	 */
 	public class CitrusSoundInstance extends CitrusEventDispatcher
 	{
 		use namespace citrus_internal;
 		
-		public var data:Object = { };
+		public var data:Object = {};
 		
 		protected var _ID:uint = 0;
 		protected static var last_id:uint = 0;
@@ -76,13 +76,13 @@ package citrus.sounds
 		
 		/**
 		 * offset to use on all sounds when playing them via Sound.play(startPosition...).
-		 * 
+		 *
 		 * If all of your sounds are encoded using the same encoder (that's important otherwise the silence could be variable),
 		 * and you are able to identify the amount of silence in ms that there is at the beginning of them,
 		 * set startPositionOffset to that value you found.
-		 * 
+		 *
 		 * This will get rid of most if not all the gaps in looping and non looping sounds.
-		 * 
+		 *
 		 * Warning: it won't get rid of the gaps caused by loading/streaming or event processing.
 		 */
 		public static var startPositionOffset:Number = 0;
@@ -93,10 +93,15 @@ package citrus.sounds
 		public static var eventVerbose:Boolean = false;
 		
 		protected static var _maxChannels:uint = SoundChannelUtil.maxAvailableChannels();
-		public static function get maxChannels():uint { return _maxChannels; };
+		
+		public static function get maxChannels():uint
+		{
+			return _maxChannels;
+		}
+		;
 		
 		{
-			if(maxChannels < 32)
+			if (maxChannels < 32)
 				trace("[CitrusSoundInstance] maximum number of concurrent SoundChannels for this instance of CitrusEngine :", maxChannels);
 		}
 		
@@ -133,7 +138,7 @@ package citrus.sounds
 		{
 			if (_destroyed)
 				return;
-				
+			
 			var soundInstance:CitrusSoundInstance;
 			
 			if (_parentsound.group && !_parentsound.group.polyphonic)
@@ -141,7 +146,7 @@ package citrus.sounds
 			
 			//check if the same CitrusSound is already playing and is permanent (if so, no need to play a second one)
 			if (_permanent)
-				for each(soundInstance in _list)
+				for each (soundInstance in _list)
 					if (soundInstance._name == this._name)
 					{
 						dispatcher(CitrusSoundEvent.NO_CHANNEL_AVAILABLE);
@@ -157,32 +162,32 @@ package citrus.sounds
 				switch (onNewChannelsUnavailable)
 				{
 					case REMOVE_FIRST_PLAYED: 
-							for (i = 0; i < _nonPermanent.length - 1; i++)
-							{
-								soundInstance = _nonPermanent[i];
-								if (soundInstance && !soundInstance.isPaused)
-									soundInstance.stop(true);
-								if (_list.length + 1 > _maxChannels)
-										i = 0;
-								else
-									break;
-							}
+						for (i = 0; i < _nonPermanent.length - 1; i++)
+						{
+							soundInstance = _nonPermanent[i];
+							if (soundInstance && !soundInstance.isPaused)
+								soundInstance.stop(true);
+							if (_list.length + 1 > _maxChannels)
+								i = 0;
+							else
+								break;
+						}
 						break;
 					case REMOVE_LAST_PLAYED: 
-							for (i = _nonPermanent.length-1; i > -1; i--)
-							{
-								soundInstance = _nonPermanent[i];
-								if (soundInstance && !soundInstance.isPaused)
-									soundInstance.stop(true);
-								if (_list.length + 1 > _maxChannels)
-										i = _nonPermanent.length-1;
-								else
-									break;
-							}
+						for (i = _nonPermanent.length - 1; i > -1; i--)
+						{
+							soundInstance = _nonPermanent[i];
+							if (soundInstance && !soundInstance.isPaused)
+								soundInstance.stop(true);
+							if (_list.length + 1 > _maxChannels)
+								i = _nonPermanent.length - 1;
+							else
+								break;
+						}
 						break;
 					case DONT_PLAY: 
-							dispatcher(CitrusSoundEvent.NO_CHANNEL_AVAILABLE);
-							stop(true);
+						dispatcher(CitrusSoundEvent.NO_CHANNEL_AVAILABLE);
+						stop(true);
 						return;
 				}
 			}
@@ -203,7 +208,7 @@ package citrus.sounds
 			_isActive = true;
 			
 			soundChannel = (_parentsound.sound as Sound).play(position, (_loops < 0) ? int.MAX_VALUE : 0);
-				
+			
 			_isPlaying = true;
 			_isPaused = false;
 			
@@ -261,8 +266,8 @@ package citrus.sounds
 		{
 			if (_destroyed)
 				return;
-				
-			if(_soundChannel)
+			
+			if (_soundChannel)
 				_soundChannel.stop();
 			soundChannel = null;
 			
@@ -298,7 +303,6 @@ package citrus.sounds
 			
 			_destroyed = true;
 		}
-		
 		
 		protected function onComplete(e:Event):void
 		{
@@ -389,7 +393,7 @@ package citrus.sounds
 		internal function set soundChannel(channel:SoundChannel):void
 		{
 			if (_soundChannel)
-				_soundChannel.removeEventListener(Event.SOUND_COMPLETE, onComplete,true);
+				_soundChannel.removeEventListener(Event.SOUND_COMPLETE, onComplete, true);
 			if (channel)
 				channel.addEventListener(Event.SOUND_COMPLETE, onComplete);
 			

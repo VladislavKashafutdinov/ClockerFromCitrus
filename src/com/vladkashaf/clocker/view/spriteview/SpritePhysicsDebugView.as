@@ -1,8 +1,8 @@
-package citrus.view.spriteview {
+package com.vladkashaf.clocker.view.spriteview {
 
-	import citrus.core.CitrusEngine;
-	import citrus.physics.APhysicsEngine;
-	import citrus.physics.IDebugView;
+	import com.vladkashaf.clocker.core.CitrusEngine;
+	import com.vladkashaf.clocker.physics.APhysicsEngine;
+	import com.vladkashaf.clocker.physics.IDebugView;
 	import flash.display.Sprite;
 	import flash.events.Event;
 

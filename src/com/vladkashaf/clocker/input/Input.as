@@ -1,9 +1,8 @@
 package com.vladkashaf.clocker.input {
 
-	import citrus.core.citrus_internal;
-	import citrus.core.CitrusEngine;
-	import citrus.input.controllers.Keyboard;
-
+	import com.vladkashaf.clocker.core.citrus_internal;
+	import com.vladkashaf.clocker.core.CitrusEngine;
+	import com.vladkashaf.clocker.input.controllers.Keyboard;
 	import org.osflash.signals.Signal;
 	
 	/**

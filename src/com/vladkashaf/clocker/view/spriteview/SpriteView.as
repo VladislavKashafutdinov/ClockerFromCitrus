@@ -1,9 +1,8 @@
-package citrus.view.spriteview {
+package com.vladkashaf.clocker.view.spriteview {
 
-	import citrus.physics.APhysicsEngine;
-	import citrus.view.ACitrusView;
-	import citrus.view.ISpriteView;
-
+	import com.vladkashaf.clocker.physics.APhysicsEngine;
+	import com.vladkashaf.clocker.view.ACitrusView;
+	import com.vladkashaf.clocker.view.ISpriteView;
 	import dragonBones.animation.WorldClock;
 
 	import flash.display.Sprite;

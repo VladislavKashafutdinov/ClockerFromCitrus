@@ -1,6 +1,5 @@
 package com.vladkashaf.clocker.system {
-
-	import citrus.core.CitrusObject;
+	import com.vladkashaf.clocker.core.CitrusObject;
 
 	/**
 	 * A game entity is compound by components. The entity serves as a link to communicate between components.

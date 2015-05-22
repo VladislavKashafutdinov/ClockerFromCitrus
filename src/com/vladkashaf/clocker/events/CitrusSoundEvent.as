@@ -1,9 +1,7 @@
 package com.vladkashaf.clocker.events 
 {
-	import citrus.events.CitrusEvent;
-	import citrus.sounds.CitrusSound;
-	import citrus.sounds.CitrusSoundInstance;
-
+	import com.vladkashaf.clocker.sounds.CitrusSound;
+	import com.vladkashaf.clocker.sounds.CitrusSoundInstance;
 	public class CitrusSoundEvent extends CitrusEvent
 	{
 		

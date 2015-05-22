@@ -1,4 +1,4 @@
-package citrus.view.starlingview {
+package com.vladkashaf.clocker.view.starlingview {
 
 	import starling.display.Image;
 	import starling.textures.Texture;

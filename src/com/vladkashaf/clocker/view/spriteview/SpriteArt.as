@@ -1,16 +1,16 @@
-package citrus.view.spriteview 
+package com.vladkashaf.clocker.view.spriteview 
 {
 
-	import citrus.core.CitrusEngine;
-	import citrus.core.CitrusObject;
-	import citrus.core.IState;
-	import citrus.physics.APhysicsEngine;
-	import citrus.physics.IDebugView;
-	import citrus.system.components.ViewComponent;
-	import citrus.view.ACitrusCamera;
-	import citrus.view.ACitrusView;
-	import citrus.view.ICitrusArt;
-	import citrus.view.ISpriteView;
+	import com.vladkashaf.clocker.core.CitrusEngine;
+	import com.vladkashaf.clocker.core.CitrusObject;
+	import com.vladkashaf.clocker.core.IState;
+	import com.vladkashaf.clocker.physics.APhysicsEngine;
+	import com.vladkashaf.clocker.physics.IDebugView;
+	import com.vladkashaf.clocker.system.components.ViewComponent;
+	import com.vladkashaf.clocker.view.ACitrusCamera;
+	import com.vladkashaf.clocker.view.ACitrusView;
+	import com.vladkashaf.clocker.view.ICitrusArt;
+	import com.vladkashaf.clocker.view.ISpriteView;
 	import flash.utils.Dictionary;
 	import org.osflash.signals.Signal;
 

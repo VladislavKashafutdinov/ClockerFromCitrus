@@ -1,10 +1,9 @@
-package citrus.sounds 
+package com.vladkashaf.clocker.sounds 
 {
-	import citrus.events.CitrusEventDispatcher;
-	import citrus.events.CitrusSoundEvent;
-	import citrus.math.MathUtils;
-	
-	import citrus.core.citrus_internal;
+	import com.vladkashaf.clocker.core.citrus_internal;
+	import com.vladkashaf.clocker.events.CitrusEventDispatcher;
+	import com.vladkashaf.clocker.events.CitrusSoundEvent;
+	import com.vladkashaf.clocker.math.MathUtils;
 	/**
 	 * CitrusSoundGroup represents a volume group with its groupID and has mute control as well.
 	 */

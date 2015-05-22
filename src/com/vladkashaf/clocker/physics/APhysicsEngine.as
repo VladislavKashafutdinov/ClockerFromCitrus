@@ -1,7 +1,6 @@
-package citrus.physics {
-
-	import citrus.core.CitrusObject;
-	import citrus.view.ICitrusArt;
+package com.vladkashaf.clocker.physics {
+	import com.vladkashaf.clocker.core.CitrusObject;
+	import com.vladkashaf.clocker.view.ICitrusArt;
 
 	/**
 	 * An abstract template used by every physics engine.

@@ -1,4 +1,4 @@
-package citrus.view
+package com.vladkashaf.clocker.view
 {
 	/**
 	 * The ISpriteView interface provides a common interface between a CitrusObject and the SpriteView view manager.

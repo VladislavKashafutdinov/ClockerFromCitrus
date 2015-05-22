@@ -1,8 +1,7 @@
 package com.vladkashaf.clocker.view {
 
-	import citrus.core.CitrusObject;
-	import citrus.utils.LoadManager;
-
+	import com.vladkashaf.clocker.core.CitrusObject;
+	import com.vladkashaf.clocker.utils.LoadManager;
 	import flash.utils.Dictionary;
 	
 	/**

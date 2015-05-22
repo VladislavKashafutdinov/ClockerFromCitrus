@@ -1,4 +1,4 @@
-package citrus.utils 
+package com.vladkashaf.clocker.utils 
 {
 	import flash.events.Event;
 	import flash.media.Sound;

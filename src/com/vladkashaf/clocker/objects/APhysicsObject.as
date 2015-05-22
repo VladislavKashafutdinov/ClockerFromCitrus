@@ -1,8 +1,7 @@
 package com.vladkashaf.clocker.objects {
 
-	import citrus.core.CitrusObject;
-	import citrus.view.ICitrusArt;
-
+	import com.vladkashaf.clocker.core.CitrusObject;
+	import com.vladkashaf.clocker.view.ICitrusArt;
 	import flash.display.MovieClip;
 
 	/**

@@ -1,4 +1,4 @@
-package citrus.physics 
+package com.vladkashaf.clocker.physics 
 {
 	/**
 	 * Physics Engine uses bits to represent collision categories.

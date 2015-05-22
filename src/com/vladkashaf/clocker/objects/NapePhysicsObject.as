@@ -1,9 +1,9 @@
 package com.vladkashaf.clocker.objects {
 
-	import citrus.physics.nape.INapePhysicsObject;
-	import citrus.physics.nape.Nape;
-	import citrus.physics.PhysicsCollisionCategories;
-	import citrus.view.ISpriteView;
+	import com.vladkashaf.clocker.physics.nape.INapePhysicsObject;
+	import com.vladkashaf.clocker.physics.nape.Nape;
+	import com.vladkashaf.clocker.physics.PhysicsCollisionCategories;
+	import com.vladkashaf.clocker.view.ISpriteView;
 	import nape.callbacks.CbType;
 	import nape.callbacks.InteractionCallback;
 	import nape.callbacks.PreCallback;

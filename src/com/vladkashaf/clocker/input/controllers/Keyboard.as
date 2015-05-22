@@ -1,6 +1,5 @@
 package com.vladkashaf.clocker.input.controllers {
-	import citrus.input.InputController;
-
+	import com.vladkashaf.clocker.input.InputController;
 	import org.osflash.signals.Signal;
 
 	import flash.events.KeyboardEvent;
