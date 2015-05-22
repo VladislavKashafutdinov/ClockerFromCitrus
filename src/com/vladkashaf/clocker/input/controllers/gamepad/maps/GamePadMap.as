@@ -1,4 +1,4 @@
-package citrus.input.controllers.gamepad.maps 
+package com.vladkashaf.clocker.input.controllers.gamepad.maps 
 {
 	import citrus.input.controllers.gamepad.Gamepad;
 	import flash.system.Capabilities;

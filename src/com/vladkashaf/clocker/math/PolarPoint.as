@@ -1,4 +1,4 @@
-package citrus.math {
+package com.vladkashaf.clocker.math {
 	
 	/**
 	 * A simple class to create points with polar coordinates.

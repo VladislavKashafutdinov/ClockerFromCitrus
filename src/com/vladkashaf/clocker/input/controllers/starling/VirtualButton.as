@@ -1,4 +1,4 @@
-package citrus.input.controllers.starling {
+package com.vladkashaf.clocker.input.controllers.starling {
 
 	import citrus.input.controllers.AVirtualButton;
 

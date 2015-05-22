@@ -1,4 +1,4 @@
-package citrus.events 
+package com.vladkashaf.clocker.events 
 {
 	public class CitrusEvent 
 	{

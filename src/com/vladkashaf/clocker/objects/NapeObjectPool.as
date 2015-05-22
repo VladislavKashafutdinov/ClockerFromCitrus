@@ -1,4 +1,4 @@
-package citrus.objects 
+package com.vladkashaf.clocker.objects 
 {
 
 	import citrus.core.CitrusEngine;

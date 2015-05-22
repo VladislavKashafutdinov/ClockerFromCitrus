@@ -1,4 +1,4 @@
-package citrus.objects.complex.box2dstarling {
+package com.vladkashaf.clocker.objects.complex.box2dstarling {
 
 	import Box2D.Collision.Shapes.b2CircleShape;
 	import Box2D.Collision.Shapes.b2PolygonShape;

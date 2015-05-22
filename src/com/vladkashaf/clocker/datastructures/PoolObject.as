@@ -1,4 +1,4 @@
-package citrus.datastructures {
+package com.vladkashaf.clocker.datastructures {
 
 	import citrus.core.citrus_internal;
 	import citrus.core.CitrusObject;

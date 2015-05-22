@@ -1,4 +1,4 @@
-package citrus.math
+package com.vladkashaf.clocker.math
 {
 	public class MathVector
 	{

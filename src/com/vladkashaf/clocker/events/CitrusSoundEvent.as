@@ -1,4 +1,4 @@
-package citrus.events 
+package com.vladkashaf.clocker.events 
 {
 	import citrus.events.CitrusEvent;
 	import citrus.sounds.CitrusSound;

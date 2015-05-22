@@ -1,4 +1,4 @@
-package citrus.objects.common {
+package com.vladkashaf.clocker.objects.common {
 
 	import citrus.core.CitrusObject;
 	import citrus.math.MathVector;

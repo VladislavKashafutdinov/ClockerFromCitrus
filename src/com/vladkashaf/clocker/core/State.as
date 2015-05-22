@@ -1,4 +1,4 @@
-package citrus.core {
+package com.vladkashaf.clocker.core {
 
 	import citrus.datastructures.PoolObject;
 	import citrus.input.Input;

@@ -1,4 +1,4 @@
-package citrus.objects.vehicle.nape {
+package com.vladkashaf.clocker.objects.vehicle.nape {
 
 	import citrus.objects.CitrusSprite;
 	import citrus.objects.NapePhysicsObject;

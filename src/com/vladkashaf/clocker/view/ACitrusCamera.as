@@ -1,4 +1,4 @@
-package citrus.view {
+package com.vladkashaf.clocker.view {
 
 	import aze.motion.EazeTween;
 	import citrus.core.CitrusEngine;

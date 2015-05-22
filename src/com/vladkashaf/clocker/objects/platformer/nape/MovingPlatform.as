@@ -1,4 +1,4 @@
-package citrus.objects.platformer.nape {
+package com.vladkashaf.clocker.objects.platformer.nape {
 
 	import citrus.math.MathVector;
 	import citrus.objects.NapePhysicsObject;

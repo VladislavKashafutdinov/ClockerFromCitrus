@@ -1,4 +1,4 @@
-package citrus.core {
+package com.vladkashaf.clocker.core {
 
 	import citrus.system.Entity;
 	import citrus.view.ISpriteView;

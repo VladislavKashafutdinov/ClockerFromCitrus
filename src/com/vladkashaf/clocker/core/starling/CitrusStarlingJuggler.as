@@ -1,4 +1,4 @@
-package citrus.core.starling 
+package com.vladkashaf.clocker.core.starling 
 {
 	import starling.animation.Juggler;
 	

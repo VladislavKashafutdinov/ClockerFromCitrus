@@ -1,7 +1,7 @@
-package citrus.core {
+package com.vladkashaf.clocker.core {
 
-	import citrus.system.Entity;
-	import citrus.view.ACitrusView;
+	import com.vladkashaf.clocker.system.Entity;
+	import com.vladkashaf.clocker.view.ACitrusView;
 	
 	/**
 	 * Take a look on the 2 respective states to have some information on the functions.

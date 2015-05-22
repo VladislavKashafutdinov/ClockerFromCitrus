@@ -1,4 +1,4 @@
-package citrus.datastructures {
+package com.vladkashaf.clocker.datastructures {
 
 	public class Tools {
 

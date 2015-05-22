@@ -1,4 +1,4 @@
-package citrus.objects {
+package com.vladkashaf.clocker.objects {
 
 	import Box2D.Collision.b2Manifold;
 	import Box2D.Collision.Shapes.b2CircleShape;

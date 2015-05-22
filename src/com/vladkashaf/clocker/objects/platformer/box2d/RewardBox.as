@@ -1,4 +1,4 @@
-package citrus.objects.platformer.box2d 
+package com.vladkashaf.clocker.objects.platformer.box2d 
 {
 
 	import Box2D.Dynamics.Contacts.b2Contact;

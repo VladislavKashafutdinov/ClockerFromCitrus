@@ -1,4 +1,4 @@
-package citrus.input 
+package com.vladkashaf.clocker.input 
 {
 	public class InputPhase 
 	{

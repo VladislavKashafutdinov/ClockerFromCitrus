@@ -1,4 +1,4 @@
-package citrus.view.starlingview {
+package com.vladkashaf.clocker.view.starlingview {
 
 	import citrus.utils.Mobile;
 	import flash.display3D.Context3DTextureFormat;

@@ -1,4 +1,4 @@
-package citrus.input.controllers.gamepad.controls 
+package com.vladkashaf.clocker.input.controllers.gamepad.controls 
 {
 	import citrus.input.controllers.gamepad.Gamepad;
 	import citrus.input.InputController;

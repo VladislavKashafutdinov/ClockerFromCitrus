@@ -1,4 +1,4 @@
-package citrus.input.controllers.displaylist {
+package com.vladkashaf.clocker.input.controllers.displaylist {
 
 	import citrus.input.controllers.AVirtualButton;
 

@@ -2,7 +2,7 @@
  * A class for using bit flags in an object. <a href="http://divillysausages.com/blog/a_bitflag_class_for_as3">Explanations</a>.
  * @author Damian Connolly - http://divillysausages.com
  */
-package citrus.datastructures {
+package com.vladkashaf.clocker.datastructures {
 
 	import flash.system.System;
 	import flash.utils.Dictionary;

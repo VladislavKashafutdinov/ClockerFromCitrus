@@ -1,4 +1,4 @@
-package citrus.objects.platformer.awayphysics {
+package com.vladkashaf.clocker.objects.platformer.awayphysics {
 
 	import awayphysics.data.AWPCollisionFlags;
 	import awayphysics.events.AWPEvent;

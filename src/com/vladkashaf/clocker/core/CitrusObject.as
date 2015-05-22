@@ -1,4 +1,4 @@
-package citrus.core
+package com.vladkashaf.clocker.core
 {
 	/**
 	 * CitrusObject is simple. Too simple. Despite its simplicity, it is the foundational object that should

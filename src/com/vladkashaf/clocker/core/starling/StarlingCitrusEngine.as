@@ -1,10 +1,10 @@
-package citrus.core.starling 
+package com.vladkashaf.clocker.core.starling 
 {
 
-	import citrus.core.CitrusEngine;
-	import citrus.core.State;
-
+	import com.vladkashaf.clocker.core.CitrusEngine;
+	import flash.display.Stage;
 	import starling.core.Starling;
+	import starling.display.DisplayObject;
 	import starling.events.Event;
 	import starling.utils.RectangleUtil;
 	import starling.utils.ScaleMode;
@@ -21,44 +21,26 @@ package citrus.core.starling
 	public class StarlingCitrusEngine extends CitrusEngine 
 	{
 		
-		private var _scaleFactor:Number = 1;
-		private var _starling:Starling;
-		private var _juggler:CitrusStarlingJuggler;
-		private var _assetSizes:Array = [1];
-		private var _baseWidth:int = -1;
-		private var _baseHeight:int = -1;
-		private var _viewportMode:String = ViewportMode.LEGACY;
-		private var _viewport:Rectangle;
-		private var _viewportBaseRatioWidth:Number = 1;
-		private var _viewportBaseRatioHeight:Number = 1;
+		private static const ASSET_SIZES:Array = [1];
+		private static const VIEWPORT_MODE:String = ViewportMode.LEGACY;
 		
-		/**
-		 * context3D profiles to test for in Ascending order (the more important first).
-		 * reset this array to a single entry to force one specific profile. <a href="http://wiki.starling-framework.org/manual/constrained_stage3d_profile">More informations</a>.
-		 */
-		private var _context3DProfiles:Array = [
-			"standardExtended", "standard", "standardConstrained", "baselineExtended", "baseline", "baselineConstrained"
-		];
+		private var _scaleFactor:Number = 1;
+		private var _juggler:CitrusStarlingJuggler;
+		private var _starlingProxy:StarlingProxy;
 		
 		public function StarlingCitrusEngine() 
 		{
 			super();
 			
+			_starlingProxy = new StarlingProxy(RootClass, stage);
+			
 			_juggler = new CitrusStarlingJuggler();
 		}
 
-		public function setupStats(hAlign:String = "left",vAlign:String = "top",scale:Number = 1):void
+		public function setupStats(hAlign:String = "left", vAlign:String = "top", scale:Number = 1):void
 		{
-			if(_starling && _starling.showStats)
-				_starling.showStatsAt(hAlign, vAlign,scale/_starling.contentScaleFactor);
+			_starlingProxy.showStatsAt(hAlign, vAlign, scale);
 		}
-
-		/**
-		 * This function is called when context3D is ready and the starling root is created.
-		 * the idea is to use this function for asset loading through the starling AssetManager and create the first state.
-		 */
-		public function handleStarlingReady():void { }
-
 		/**
 		 * You should call this function to create your Starling view. The RootClass is internal, it is never used elsewhere. 
 		 * StarlingState is added on the starling stage : <code>_starling.stage.addChildAt(_state as StarlingState, _stateDisplayIndex);</code>
@@ -67,36 +49,33 @@ package citrus.core.starling
 		 * @param viewPort Starling's viewport, default is (0, 0, stage.stageWidth, stage.stageHeight, change to (0, 0, stage.fullScreenWidth, stage.fullScreenHeight) for mobile.
 		 * @param stage3D The reference to the Stage3D, useful for sharing a 3D context. <a href="http://wiki.starling-framework.org/tutorials/combining_starling_with_other_stage3d_frameworks">More informations</a>.
 		 */
-		public function setUpStarling(
-			debugMode:Boolean = false, antiAliasing:uint = 1, viewPort:Rectangle = null, stage3D:Stage3D = null):void {
-
-			Starling.handleLostContext = true;
-				
-			if (viewPort)
-				_viewport = viewPort;
-				
-			_starling = new Starling(
-				RootClass, stage, null, stage3D, "auto", context3DProfiles);
-			
-			_starling.antiAliasing = antiAliasing;
-			
-			_starling.showStats = debugMode;
-			
-			_starling.addEventListener(
-				starling.events.Event.CONTEXT3D_CREATE, 
-				_context3DCreated);
-			
-			_starling.stage.addEventListener(
-				starling.events.Event.RESIZE, 
-				handleStarlingStageResize);
+		public function setUpStarling(debug:Boolean = false, antiAliasing:uint = 1, viewPort:Rectangle = null, stage3D:Stage3D = null):void 
+		{
+			_starlingProxy.initialize(debug, antiAliasing, stage3D, viewPort, _context3DCreated, handleStarlingStageResize);
 		}
+
+		
+		/**
+		 * This function is called when context3D is ready and the starling root is created.
+		 * the idea is to use this function for asset loading through the starling AssetManager and create the first state.
+		 */
+		protected function handleStarlingReady():void { }
 
 		protected function handleStarlingStageResize(evt:starling.events.Event):void 
 		{
 			resetScreenSize();
+			
 			onStageResize.dispatch(_screenWidth, _screenHeight);
 		}
 		
+		protected function resetViewport():void
+		{
+			_starlingProxy.resetViewport(_screenWidth, _screenHeight, VIEWPORT_MODE);
+			
+			_scaleFactor = findScaleFactor(ASSET_SIZES);
+			
+			_starlingProxy.applyViewportTo(transformMatrix);
+		}
 		/**
 		 * returns the asset size closest to one of the available asset sizes you have (based on <code>Starling.contentScaleFactor</code>).
 		 * If you design your app with a Starling's stage dimension equals to the Flash's stage dimension, you will have to overwrite 
@@ -106,118 +85,29 @@ package citrus.core.starling
 		 */
 		protected function findScaleFactor(assetSizes:Array):Number
 		{
-			var arr:Array = assetSizes;
-			arr.sort(Array.NUMERIC);
-			var scaleF:Number = Math.floor(starling.contentScaleFactor * 1000) / 1000;
-			var closest:Number;
-			var f:Number;
-			for each (f in arr)
-				if (!closest || Math.abs(f - scaleF) < Math.abs(closest - scaleF))
-					closest = f;
+			var scaleFactor:Number = Math.floor(starling.contentScaleFactor * 1000) / 1000;
 			
-			return closest;
+			return assetSizes.length > 0 
+				? assetSizes
+					.map(function (s:Number, ... a):* { return { assetSize:s, sort:Math.abs(s - scaleFactor) }; } )
+					.sortOn('sort')[assetSizes.length - 1].assetSize
+				: undefined;
 		}
-		
-		protected function resetViewport():Rectangle
-		{
-			if (_baseHeight < 0)
-				_baseHeight = _screenHeight;
-			if (_baseWidth < 0)
-				_baseWidth = _screenWidth;	
-				
-			var baseRect:Rectangle = new Rectangle(0, 0, _baseWidth, _baseHeight);
-			var screenRect:Rectangle = new Rectangle(0, 0, _screenWidth, _screenHeight);
-			
-			switch(_viewportMode)
-			{
-				case ViewportMode.LETTERBOX:
-					_viewport = RectangleUtil.fit(baseRect, screenRect, ScaleMode.SHOW_ALL);
-					_viewport.x = _screenWidth * .5 - _viewport.width * .5;
-					_viewport.y = _screenHeight * .5 - _viewport.height * .5;
-					if (_starling)
-					{
-						_starling.stage.stageWidth = _baseWidth;
-						_starling.stage.stageHeight = _baseHeight;
-					}
-					
-					break;
-				case ViewportMode.FULLSCREEN:
-					_viewport = RectangleUtil.fit(baseRect, screenRect, ScaleMode.SHOW_ALL);
-					_viewportBaseRatioWidth = _viewport.width / baseRect.width;
-					_viewportBaseRatioHeight = _viewport.height / baseRect.height;
-					_viewport.copyFrom(screenRect);
-					
-					_viewport.x = 0;
-					_viewport.y = 0;
-					
-					if (_starling)
-					{
-						_starling.stage.stageWidth = screenRect.width / _viewportBaseRatioWidth;
-						_starling.stage.stageHeight = screenRect.height / _viewportBaseRatioHeight;
-					}
-					
-					break;
-				case ViewportMode.NO_SCALE:
-					_viewport = baseRect;
-					_viewport.x = _screenWidth * .5 - _viewport.width * .5;
-					_viewport.y = _screenHeight * .5 - _viewport.height * .5;
-					
-					if (_starling)
-					{
-						_starling.stage.stageWidth = _baseWidth;
-						_starling.stage.stageHeight = _baseHeight;
-					}
-					
-					break;
-				case ViewportMode.LEGACY:
-						_viewport = screenRect;
-						if (_starling)
-						{
-							_starling.stage.stageWidth = screenRect.width;
-							_starling.stage.stageHeight = screenRect.height;
-						}
-				case ViewportMode.MANUAL:
-					if(!_viewport)
-						_viewport = _starling.viewPort.clone();
-					break;
-			}
-			
-			_scaleFactor = findScaleFactor(_assetSizes);
-			
-			if (_starling)
-			{
-				transformMatrix.identity();
-				transformMatrix.scale(_starling.contentScaleFactor,_starling.contentScaleFactor);
-				transformMatrix.translate(_viewport.x,_viewport.y);
-			}
-			
-			return _viewport;
-		}
-		
 		/**
 		 * Be sure that starling is initialized (especially on mobile).
 		 */
 		protected function _context3DCreated(evt:starling.events.Event):void 
 		{
-
-			_starling.removeEventListener(starling.events.Event.CONTEXT3D_CREATE, _context3DCreated);
-			
 			resetScreenSize();
 			
-			if (!_starling.isStarted)
-				_starling.start();
-				
-			_starling.addEventListener(starling.events.Event.ROOT_CREATED, _starlingRootCreated);
+			_starlingProxy.start(_starlingRootCreated);
 		}
-		
 		protected function _starlingRootCreated(evt:starling.events.Event):void 
 		{
-			
-			_starling.removeEventListener(starling.events.Event.ROOT_CREATED, _starlingRootCreated);
-				
 			stage.removeEventListener(flash.events.Event.RESIZE, handleStageResize);
 			
 			handleStarlingReady();
+			
 			setupStats();
 		}
 		
@@ -232,14 +122,10 @@ package citrus.core.starling
 			
 			_juggler.purge();
 
-			if (_state) {
-
-				if (_starling) {
-					_starling.stage.removeEventListener(starling.events.Event.RESIZE, handleStarlingStageResize);
-					_starling.stage.removeChild(_state as StarlingState);
-					_starling.root.dispose();
-					_starling.dispose();
-				}
+			if (_state) 
+			{
+				_starlingProxy.removeFromStage(_state as StarlingState, false);
+				_starlingProxy.destroy();
 			}
 		}
 		
@@ -260,13 +146,12 @@ package citrus.core.starling
 		{
 			super.resetScreenSize();
 			
-			if (!_starling)
-				return;
-			
-			resetViewport();
-			_starling.viewPort.copyFrom(_viewport);
-			
-			setupStats();
+			if (_starlingProxy.starling)
+			{
+				resetViewport();
+				
+				setupStats();
+			}
 		}
 
 		/**
@@ -274,56 +159,44 @@ package citrus.core.starling
 		 */
 		override protected function handleEnterFrame(e:flash.events.Event):void 
 		{
+			if (_starlingProxy.starling && _starlingProxy.starling.isStarted && _starlingProxy.starling.context) 
+			{
+				if (_newState && _state && _state is StarlingState) 
+				{
+					_state.destroy();
+					_starlingProxy.removeFromStage(_state as StarlingState, true);
+				} 
+				else if (_newState && _state && _newState is StarlingState) 
+				{
+					_state.destroy();
+					removeChild(_state as State);
+				}
+				if (_newState && _newState is StarlingState) 
+				{
+					_state = _newState;
+					_newState = null;
 
-			if (_starling && _starling.isStarted && _starling.context) {
-
-				if (_newState) {
-
-					if (_state) {
-
-						if (_state is StarlingState) {
-
-							_state.destroy();
-							_starling.stage.removeChild(_state as StarlingState, true);
-
-						} else if(_newState is StarlingState) {
-
-							_state.destroy();
-							removeChild(_state as State);
-						}
-
-					}
-
-					if (_newState is StarlingState) {
-
-						_state = _newState;
-						_newState = null;
-
-						if (_futureState)
-							_futureState = null;
-						else {
-							_starling.stage.addChildAt(_state as StarlingState, _stateDisplayIndex);
-							_state.initialize();
-						}
+					if (_futureState)
+						_futureState = null;
+					else 
+					{
+						_starlingProxy.addChildAtStage(_state as StarlingState, _stateDisplayIndex);
+						_state.initialize();
 					}
 				}
-
-				if (_stateTransitionning && _stateTransitionning is StarlingState) {
-
+				if (_stateTransitionning && _stateTransitionning is StarlingState) 
+				{
 					_futureState = _stateTransitionning;
 					_stateTransitionning = null;
-
-					starling.stage.addChildAt(_futureState as StarlingState, _stateDisplayIndex);
+					_starlingProxy.addChildAtStage(_futureState as StarlingState, _stateDisplayIndex);
 					_futureState.initialize();
 				}
-
 			}
 
 			super.handleEnterFrame(e);
 			
 			if(_juggler)
 				_juggler.advanceTime(_timeDelta);
-			
 		}
 		
 		/**
@@ -333,9 +206,8 @@ package citrus.core.starling
 		 */
 		override protected function handleStageDeactivated(e:flash.events.Event):void 
 		{
-
-			if (_playing && _starling)
-				_starling.stop();
+			if (_playing)
+				_starlingProxy.stop();
 
 			super.handleStageDeactivated(e);
 		}
@@ -346,17 +218,14 @@ package citrus.core.starling
 		 */
 		override protected function handleStageActivated(e:flash.events.Event):void 
 		{
-
-			if (_starling && !_starling.isStarted)
-				_starling.start();
-
+			_starlingProxy.start();
 			super.handleStageActivated(e);
 		}
 		
 		
 		public function get starling():Starling 
 		{
-			return _starling;
+			return _starlingProxy.starling;
 		}
 		
 		public function get scaleFactor():Number
@@ -366,27 +235,23 @@ package citrus.core.starling
 
 		public function get baseWidth():int
 		{
-			return _baseWidth;
+			return _starlingProxy.baseWidth;
 		}
 		
 		public function set baseWidth(value:int):void 
 		{
-			
-			_baseWidth = value;
-			
+			_starlingProxy.baseWidth = value;
 			resetViewport();
 		}
 		
 		public function get baseHeight():int
 		{
-			return _baseHeight;
+			return _starlingProxy.baseHeight;
 		}
 		
 		public function set baseHeight(value:int):void 
 		{
-			
-			_baseHeight = value;
-			
+			_starlingProxy.baseHeight = value;
 			resetViewport();
 		}
 		
@@ -397,7 +262,7 @@ package citrus.core.starling
 		
 		protected function get context3DProfiles():Array
 		{
-			return _context3DProfiles;
+			return _starlingProxy.context3DProfiles;
 		}
 		
 	}

@@ -1,4 +1,4 @@
-package citrus.core {
+package com.vladkashaf.clocker.core {
 
 	import citrus.input.Input;
 	import citrus.sounds.SoundManager;

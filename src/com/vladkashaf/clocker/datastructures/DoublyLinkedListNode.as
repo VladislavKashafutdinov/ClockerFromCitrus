@@ -1,4 +1,4 @@
-package citrus.datastructures {
+package com.vladkashaf.clocker.datastructures {
 	
 	/**
 	 * Each node is composed of a data and references (in other words, links) to the next and previous node in the sequence.

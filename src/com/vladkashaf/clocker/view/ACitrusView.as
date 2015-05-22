@@ -1,4 +1,4 @@
-package citrus.view {
+package com.vladkashaf.clocker.view {
 
 	import citrus.core.CitrusObject;
 	import citrus.utils.LoadManager;

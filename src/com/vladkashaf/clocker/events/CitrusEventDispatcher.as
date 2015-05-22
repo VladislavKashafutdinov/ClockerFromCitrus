@@ -1,4 +1,4 @@
-package citrus.events 
+package com.vladkashaf.clocker.events 
 {
 	import flash.utils.Dictionary;
 	import citrus.core.citrus_internal;

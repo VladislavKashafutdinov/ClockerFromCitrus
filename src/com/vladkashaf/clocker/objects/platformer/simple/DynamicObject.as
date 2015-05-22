@@ -1,4 +1,4 @@
-package citrus.objects.platformer.simple {
+package com.vladkashaf.clocker.objects.platformer.simple {
 
 	import citrus.objects.CitrusSprite;
 

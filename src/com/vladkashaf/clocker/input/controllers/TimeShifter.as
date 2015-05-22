@@ -1,4 +1,4 @@
-package citrus.input.controllers {
+package com.vladkashaf.clocker.input.controllers {
 
 	import citrus.input.InputAction;
 	import citrus.input.InputController;

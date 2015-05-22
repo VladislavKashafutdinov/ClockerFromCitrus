@@ -1,4 +1,4 @@
-package citrus.input {
+package com.vladkashaf.clocker.input {
 
 	import citrus.core.citrus_internal;
 	import citrus.core.CitrusEngine;
