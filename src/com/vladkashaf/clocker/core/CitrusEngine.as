@@ -1,10 +1,9 @@
 package com.vladkashaf.clocker.core {
 
-	import citrus.input.Input;
-	import citrus.sounds.SoundManager;
-	import citrus.utils.AGameData;
-	import citrus.utils.LevelManager;
-
+	import com.vladkashaf.clocker.input.Input;
+	import com.vladkashaf.clocker.sounds.SoundManager;
+	import com.vladkashaf.clocker.utils.AGameData;
+	import com.vladkashaf.clocker.utils.LevelManager;
 	import org.osflash.signals.Signal;
 
 	import flash.display.MovieClip;
@@ -26,37 +25,6 @@ package com.vladkashaf.clocker.core {
 	public class CitrusEngine extends MovieClip
 	{
 		public static const VERSION:String = "3.1.10";
-				
-		private static var _instance:CitrusEngine;
-		
-		/**
-		 * DEBUG is not used by CitrusEngine, it is there for your own convenience
-		 * so you can access it wherever the _ce 'shortcut' is. defaults to false.
-		 */
-		public var DEBUG:Boolean = false;
-		
-		/**
-		 * Used to pause animations in SpriteArt and StarlingArt.
-		 */
-		public var onPlayingChange:Signal;
-		
-		/**
-		 * called after a stage resize event
-		 * signal passes the new screenWidth and screenHeight as arguments.
-		 */
-		public var onStageResize:Signal;
-		
-		/**
-		 * You may use a class to store your game's data, this is already an abstract class made for that. 
-		 * It's also a dynamic class, so you won't have problem to access information in its extended class.
-		 */
-		public var gameData:AGameData;
-		
-		/**
-		 * You may use the Citrus Engine's level manager if you have several levels to handle. Take a look on its class for more information.
-		 */
-		public var levelManager:LevelManager;
-		
 		/**
 		 * the matrix that describes the transformation required to go from state container space to flash stage space.
 		 * note : this does not include the camera's transformation.
@@ -67,26 +35,301 @@ package com.vladkashaf.clocker.core {
 		 * using flash only, the state container is aligned and of the same scale as the flash stage, so this is not required.
 		 */
 		public const transformMatrix:Matrix = new Matrix();
-		
-		protected var _state:IState;
-		protected var _newState:IState;
-		protected var _stateTransitionning:IState;
-		protected var _futureState:IState;
-		protected var _stateDisplayIndex:uint = 0;
-		protected var _playing:Boolean = true;
-		protected var _input:Input;
-		
-		protected var _fullScreen:Boolean = false;
-		protected var _screenWidth:int = 0;
-		protected var _screenHeight:int = 0;
-		
+
+		private static var _instance:CitrusEngine;
+		private var _timeDeltaInner:Number;
+		private var _stateTransitionningInner:IState;
+		private var _stateInner:IState;
+		private var _screenWidthInner:int = 0;
+		private var _screenHeightInner:int = 0;
+		private var _newStateInner:IState;
+		private var _inputInner:Input;
+		private var _playingInner:Boolean = true;
+		private var _futureStateInner:IState;
+		private var _stateDisplayIndexInner:uint = 0;
 		private var _startTime:Number;
+		// what is it??
 		private var _gameTime:Number;
 		private var _nowTime:Number;
-		protected var _timeDelta:Number;
-		
 		private var _sound:SoundManager;
 		private var _console:Console;
+		private var _debug:Boolean = false;
+		private var _gameData:AGameData;
+		private var _levelManager:LevelManager;
+		private var _onPlayingChange:Signal;
+		private var _onStageResize:Signal;
+		private var _fullScreenInner:Boolean = false;
+		
+		public function get fullScreen():Boolean
+		{
+			return _fullScreen;
+		}
+		public function set fullScreen(value:Boolean):void
+		{
+			if (value == _fullScreen)
+				return;
+				
+			if(value)
+				stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
+			else
+				stage.displayState = StageDisplayState.NORMAL;
+			
+			resetScreenSize();
+		}
+		public function get screenWidth():int
+		{
+			return _screenWidth;
+		}
+		public function get screenHeight():int
+		{
+			return _screenHeight;
+		}
+		/**
+		 * DEBUG is not used by CitrusEngine, it is there for your own convenience
+		 * so you can access it wherever the _ce 'shortcut' is. defaults to false.
+		 */
+		public function get DEBUG():Boolean
+		{
+			return _debug;
+		}
+		public function set DEBUG(value:Boolean):Boolean
+		{
+			return _debug = value;
+		}
+		/**
+		 * Used to pause animations in SpriteArt and StarlingArt.
+		 */
+		public function get onPlayingChange():Signal
+		{
+			return _onPlayingChange;
+		}
+		public function set onPlayingChange(value:Signal):Signal
+		{
+			return _onPlayingChange = value;
+		}
+		/**
+		 * called after a stage resize event
+		 * signal passes the new screenWidth and screenHeight as arguments.
+		 */
+		public function get onStageResize():Signal
+		{
+			return _onStageResize;
+		}
+		public function set onStageResize(value:Signal):Signal
+		{
+			return _onStageResize = value;
+		}
+		/**
+		 * You may use a class to store your game's data, this is already an abstract class made for that. 
+		 * It's also a dynamic class, so you won't have problem to access information in its extended class.
+		 */
+		public function get gameData():AGameData
+		{
+			return _gameData;
+		}
+		public function set gameData(value:AGameData):AGameData
+		{
+			return _gameData = value;
+		}
+		/**
+		 * You may use the Citrus Engine's level manager if you have several levels to handle. Take a look on its class for more information.
+		 */
+		public function get levelManager():LevelManager
+		{
+			return _levelManager;
+		}
+		public function set levelManager(value:LevelManager):void
+		{
+			return _levelManager = value;
+		}
+		/**
+		 * A reference to the active game state. Actually, that's not entirely true. If you've recently changed states and a tick
+		 * hasn't occurred yet, then this will reference your new state; this is because actual state-changes only happen pre-tick.
+		 * That way you don't end up changing states in the middle of a state's tick, effectively fucking stuff up.
+		 * 
+		 * If you had set up a futureState, accessing the state it wil return you the futureState to enable some objects instantiation 
+		 * (physics, views, etc).
+		 */		
+		public function get state():IState
+		{
+			if (_futureState)
+				return _futureState;
+						
+			else if (_newState)
+				return _newState;
+						
+			else 
+				return _state;
+		}
+		/**
+		 * We only ACTUALLY change states on enter frame so that we don't risk changing states in the middle of a state update.
+		 * However, if you use the state getter, it will grab the new one for you, so everything should work out just fine.
+		 */		
+		public function set state(value:IState):void
+		{
+			_newState = value;
+		}
+		/**
+		 * Get a direct access to the futureState. Note that the futureState is really set up after an update so it isn't 
+		 * available via state getter before a state update.
+		 */
+		public function get futureState():IState {
+			return _futureState ? _futureState : _stateTransitionning;
+		}
+		/**
+		 * The futureState variable is useful if you want to have two states running at the same time for making a transition. 
+		 * Note that the futureState is added with the same index than the state, so it will be behind unless the state runs 
+		 * on Starling and the futureState on the display list (which is absolutely doable).
+		 */
+		public function set futureState(value:IState):void {
+			_stateTransitionning = value;
+		}
+		/**
+		 * @return true if the Citrus Engine is playing
+		 */		
+		public function get playing():Boolean
+		{
+			return _playing;
+		}
+		/**
+		 * Runs and pauses the game loop. Assign this to false to pause the game and stop the
+		 * <code>update()</code> methods from being called.
+		 * Dispatch the Signal onPlayingChange with the value.
+		 * CitrusEngine calls its own handlePlayingChange listener to
+		 * 1.reset all input actions when "playing" changes
+		 * 2.pause or resume all sounds.
+		 * override handlePlayingChange to override all or any of these behaviors.
+		 */
+		public function set playing(value:Boolean):void
+		{
+			if (value == _playing)
+				return;
+				
+			_playing = value;
+			if (_playing)
+				_gameTime = new Date().time;
+			onPlayingChange.dispatch(_playing);
+		}
+		/**
+		 * You can get access to the Input manager object from this reference so that you can see which keys are pressed and stuff. 
+		 */		
+		public function get input():Input
+		{
+			return _input;
+		}
+		/**
+		 * A reference to the SoundManager instance. Use it if you want.
+		 */		
+		public function get sound():SoundManager
+		{
+			return _sound;
+		}
+		/**
+		 * A reference to the console, so that you can add your own console commands. See the class documentation for more info.
+		 * The console can be opened by pressing the tab key.
+		 * There is one console command built-in by default, but you can add more by using the addCommand() method.
+		 * 
+		 * <p>To try it out, try using the "set" command to change a property on a CitrusObject. You can toggle Box2D's
+		 * debug draw visibility like this "set Box2D visible false". If your Box2D CitrusObject instance is not named
+		 * "Box2D", use the name you gave it instead.</p>
+		 */		
+		public function get console():Console
+		{
+			return _console;
+		}
+		
+		protected function get _state():IState
+		{
+			return _stateInner;
+		}
+		protected function set _state(value:IState):IState
+		{
+			return _stateInner = value;
+		}
+		protected function get _newState():IState
+		{
+			return _newStateInner;
+		}
+		protected function set _newState(value:IState):IState
+		{
+			return _newStateInner = value;
+		}
+		// transitioning of state? what? why IState?
+		protected function get _stateTransitionning():IState
+		{
+			return _stateTransitionningInner;
+		}
+		protected function set _stateTransitionning(value:IState):void
+		{
+			return _stateTransitionningInner = value;
+		}
+		// what is difference with _newState?
+		protected function get _futureState():IState
+		{
+			return _futureStateInner;
+		}
+		protected function set _futureState(value:IState):IState
+		{
+			return _futureStateInner = value;
+		}
+		protected function get _stateDisplayIndex():uint
+		{
+			return _stateDisplayIndexInner;
+		}
+		protected function set _stateDisplayIndex(value:uint):uint
+		{
+			return _stateDisplayIndexInner = value;
+		}
+		protected function get _playing():Boolean
+		{
+			return _playingInner;
+		}
+		protected function set _playing(value:Boolean):Boolean
+		{
+			return _playingInner = value;
+		}
+		protected function get _input():Input
+		{
+			return _inputInner;
+		}
+		protected function set _input(value:Input):Input
+		{
+			return _inputInner = value;
+		}
+		protected function get _fullScreen():Boolean
+		{
+			return _fullScreenInner;
+		}
+		protected function set _fullScreen(value:Boolean):Boolean
+		{
+			return _fullScreenInner = value;
+		}
+		protected function get _screenWidth():int
+		{
+			return _screenWidthInner;
+		}
+		protected function set _screenWidth(value:int):int
+		{
+			return _screenWidthInner = value;
+		}
+		protected function get _screenHeight():int
+		{
+			return _screenHeightInner;
+		}
+		protected function set _screenHeight(value:int):int
+		{
+			return _screenHeightInner = value;
+		}
+		// what is it??
+		protected function get _timeDelta():Number
+		{
+			return _timeDeltaInner;
+		}
+		protected function set _timeDelta(value:Number):void
+		{
+			return _timeDeltaInner = value;
+		}
+		
 		
 		public static function getInstance():CitrusEngine
 		{
@@ -133,6 +376,12 @@ package com.vladkashaf.clocker.core {
 		}
 		
 		/**
+		 * Called when CitrusEngine is added to the stage and ready to run.
+		 */
+		public function initialize():void {
+		}
+		
+		/**
 		 * Destroy the Citrus Engine, use it only if the Citrus Engine is just a part of your project and not your Main class.
 		 */
 		public function destroy():void {
@@ -163,110 +412,6 @@ package com.vladkashaf.clocker.core {
 		}
 		
 		/**
-		 * A reference to the active game state. Actually, that's not entirely true. If you've recently changed states and a tick
-		 * hasn't occurred yet, then this will reference your new state; this is because actual state-changes only happen pre-tick.
-		 * That way you don't end up changing states in the middle of a state's tick, effectively fucking stuff up.
-		 * 
-		 * If you had set up a futureState, accessing the state it wil return you the futureState to enable some objects instantiation 
-		 * (physics, views, etc).
-		 */		
-		public function get state():IState
-		{
-			if (_futureState)
-				return _futureState;
-						
-			else if (_newState)
-				return _newState;
-						
-			else 
-				return _state;
-		}
-		
-		/**
-		 * We only ACTUALLY change states on enter frame so that we don't risk changing states in the middle of a state update.
-		 * However, if you use the state getter, it will grab the new one for you, so everything should work out just fine.
-		 */		
-		public function set state(value:IState):void
-		{
-			_newState = value;
-		}
-		
-		/**
-		 * Get a direct access to the futureState. Note that the futureState is really set up after an update so it isn't 
-		 * available via state getter before a state update.
-		 */
-		public function get futureState():IState {
-			return _futureState ? _futureState : _stateTransitionning;
-		}
-		
-		/**
-		 * The futureState variable is useful if you want to have two states running at the same time for making a transition. 
-		 * Note that the futureState is added with the same index than the state, so it will be behind unless the state runs 
-		 * on Starling and the futureState on the display list (which is absolutely doable).
-		 */
-		public function set futureState(value:IState):void {
-			_stateTransitionning = value;
-		}
-		
-		/**
-		 * @return true if the Citrus Engine is playing
-		 */		
-		public function get playing():Boolean
-		{
-			return _playing;
-		}
-		
-		/**
-		 * Runs and pauses the game loop. Assign this to false to pause the game and stop the
-		 * <code>update()</code> methods from being called.
-		 * Dispatch the Signal onPlayingChange with the value.
-		 * CitrusEngine calls its own handlePlayingChange listener to
-		 * 1.reset all input actions when "playing" changes
-		 * 2.pause or resume all sounds.
-		 * override handlePlayingChange to override all or any of these behaviors.
-		 */
-		public function set playing(value:Boolean):void
-		{
-			if (value == _playing)
-				return;
-				
-			_playing = value;
-			if (_playing)
-				_gameTime = new Date().time;
-			onPlayingChange.dispatch(_playing);
-		}
-		
-		/**
-		 * You can get access to the Input manager object from this reference so that you can see which keys are pressed and stuff. 
-		 */		
-		public function get input():Input
-		{
-			return _input;
-		}
-		
-		/**
-		 * A reference to the SoundManager instance. Use it if you want.
-		 */		
-		public function get sound():SoundManager
-		{
-			return _sound;
-		}
-		
-		/**
-		 * A reference to the console, so that you can add your own console commands. See the class documentation for more info.
-		 * The console can be opened by pressing the tab key.
-		 * There is one console command built-in by default, but you can add more by using the addCommand() method.
-		 * 
-		 * <p>To try it out, try using the "set" command to change a property on a CitrusObject. You can toggle Box2D's
-		 * debug draw visibility like this "set Box2D visible false". If your Box2D CitrusObject instance is not named
-		 * "Box2D", use the name you gave it instead.</p>
-		 */		
-		public function get console():Console
-		{
-			return _console;
-		}
-		
-		/**
 		 * Set up things that need the stage access.
 		 */
 		protected function handleAddedToStage(e:Event):void 
@@ -286,12 +431,6 @@ package com.vladkashaf.clocker.core {
 			_input.initialize();
 			
 			this.initialize();
-		}
-		
-		/**
-		 * Called when CitrusEngine is added to the stage and ready to run.
-		 */
-		public function initialize():void {
 		}
 		
 		protected function handleStageFullscreen(e:FullScreenEvent):void
@@ -454,32 +593,5 @@ package com.vladkashaf.clocker.core {
 				trace("Warning: " + objectName + " has no parameter named " + paramName + ".");
 		}
 		
-		public function get fullScreen():Boolean
-		{
-			return _fullScreen;
-		}
-		
-		public function set fullScreen(value:Boolean):void
-		{
-			if (value == _fullScreen)
-				return;
-				
-			if(value)
-				stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
-			else
-				stage.displayState = StageDisplayState.NORMAL;
-			
-			resetScreenSize();
-		}
-		
-		public function get screenWidth():int
-		{
-			return _screenWidth;
-		}
-		
-		public function get screenHeight():int
-		{
-			return _screenHeight;
-		}
 	}
 }

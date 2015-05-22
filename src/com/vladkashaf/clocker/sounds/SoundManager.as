@@ -1,4 +1,4 @@
-package citrus.sounds {
+package com.vladkashaf.clocker.sounds {
 
 	import aze.motion.eaze;
 	

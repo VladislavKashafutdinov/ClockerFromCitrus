@@ -1,4 +1,4 @@
-package citrus.utils {
+package com.vladkashaf.clocker.utils {
 
 	import org.osflash.signals.Signal;
 
